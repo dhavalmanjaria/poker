@@ -1,0 +1,8 @@
+
+public enum HAND_TYPE {
+	TWO_PAIR,
+	THREE_OF_A_KIND,
+	STRAIGHT,
+	FLUSH,
+	FOUR_OF_A_KIND
+};

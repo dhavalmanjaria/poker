@@ -94,3 +94,28 @@ kh
 
 8h
 
+Output:
+
+Straight
+
+Test Case 3:
+
+Input:
+
+2s
+
+kd
+
+2h
+
+as
+
+2d
+
+6h
+
+2c
+
+Output:
+
+Four of a kind

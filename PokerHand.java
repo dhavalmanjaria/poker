@@ -1,6 +1,9 @@
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
+
+
 
 /**
  * 
@@ -28,19 +31,63 @@ public class PokerHand  {
 		return cards;
 	}
 	
-	enum HAND_TYPE {
-		TWO_PAIR,
-		THREE_OF_A_KIND,
-		STRAIGHT,
-		FLUSH,
-		FOUR_OF_A_KIND
-	};
 	
 	public PokerHand(ArrayList<Card> hand) {
 		this.cards = hand;
 	}
 	
-	// The TwoPair described is actually a One Pair
+	/**
+	 * This function evaluates a set of cards and defines what type of hand it is. This is also where the priority of the hands will be set
+	 * 
+	 * @return
+	 */
+	public HAND_TYPE evaluateHandType() {
+		HAND_TYPE retval = null;
+		
+        if (isOnePair()) {
+            retval = HAND_TYPE.TWO_PAIR;
+        }
+        
+        if (isThreeOfAKind()) {
+            retval = HAND_TYPE.THREE_OF_A_KIND;
+        }
+        
+        if (isStraight()) {
+            retval = HAND_TYPE.STRAIGHT;
+        }
+        
+        if (isFlush()) {
+            retval = HAND_TYPE.FLUSH;
+        } 
+        
+        if (isFourOfAKind()) {
+            retval = HAND_TYPE.FOUR_OF_A_KIND;
+        }
+        
+		return retval;
+	}
+	
+	public void printHandType() {
+		switch(evaluateHandType()) {
+		case TWO_PAIR:
+			System.out.println("TWO PAIR");
+			break;
+		case THREE_OF_A_KIND:
+			System.out.println("THREE OF A KIND");
+			break;
+		case STRAIGHT:
+			System.out.println("STRAIGHT");
+			break;
+		case FLUSH:
+			System.out.println("FLUSH");
+			break;
+		case FOUR_OF_A_KIND:
+			System.out.println("FOUR OF A KIND");
+			break;
+		}
+	}
+	
+	// The Two Pair described is actually a One Pair
 	public boolean isOnePair() {
 		HashMap<Integer, Integer> numberCount = new HashMap<Integer, Integer>();
     	
@@ -115,25 +162,23 @@ public class PokerHand  {
        
        boolean retval = false;
 
-       int seq_count = 0;
-       for(int i = 0; i < straightList.size(); i++) {
-    	  // System.out.println((straightList.get(i) - straightList.get(i - )) == 1);
-    	   if (i > 0) {
-    		   
-    		   if ((straightList.get(i) - straightList.get(i - 1)) <= 1) {
-    			   seq_count++;
-				   if(seq_count > 4) {
-    				   retval = true;
-    			   }
-    		   } 
-    		   else {
-    			   seq_count = 0;
-    			   retval = false;
-    		   }
-
-    	   }
+       int minimum = straightList.get(0);
+       ArrayList<Integer> expectedSequence = new ArrayList<Integer>();
+       
+       for(int i = minimum; i < minimum + 5; i++) {
+    	   expectedSequence.add(i);
        }
-       return retval;
+       
+       HashSet<Integer> givenSequence = new HashSet<Integer>();
+       for(Integer i: straightList) {
+    	   givenSequence.add(i);
+       }
+       
+       if (givenSequence.containsAll(expectedSequence)) {
+    	   return true;
+       }
+       else
+    	   return false;
     }
     
     public boolean isFlush() {
@@ -145,15 +190,13 @@ public class PokerHand  {
     			charCount.put(c.getSuite(), count + 1);
     		}
     		else
-    			charCount.put(c.getSuite(), 0);
+    			charCount.put(c.getSuite(), 1);
+
     	}
     	
     	for(Character ch: charCount.keySet()) {
     		if (charCount.get(ch) >= 5) {
     			return true;
-    		}
-    		else {
-    			return false;
     		}
     	}
     	return false;

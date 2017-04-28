@@ -7,7 +7,7 @@ import org.junit.Test;
 public class PokerHandTest {
 
 	@Test
-	public void test_create_random_hand() {
+	public void testCreateRandomHand() {
 		// Hand = 7s qs kh
 		
 		PokerHand hand = new PokerHand ();
@@ -30,7 +30,7 @@ public class PokerHandTest {
 	}
 	
 	@Test
-	public void test_isOnePair() {
+	public void testIsOnePair() {
 		CardFactory cfactory = new CardFactory();
 		
 		ArrayList<Card> onePair = new ArrayList<Card>();
@@ -46,7 +46,7 @@ public class PokerHandTest {
 	}
 	
 	@Test
-	public void test_isThreeOfAKind() {
+	public void testIsThreeOfAKind() {
 		CardFactory cfactory = new CardFactory();
 		
 		ArrayList<Card> threeOfAKind = new ArrayList<Card>();
@@ -61,7 +61,7 @@ public class PokerHandTest {
 	}
 	
 	@Test
-	public void test_isFourOfAKind() {
+	public void testIsFourOfAKind() {
 		CardFactory cfactory = new CardFactory();
 		
 
@@ -77,7 +77,7 @@ public class PokerHandTest {
 	}
 	
 	@Test
-	public void test_isStraight() {
+	public void testIsStraight() {
 		CardFactory cfactory = new CardFactory();
 		
 		ArrayList<Card> straight = new ArrayList<Card>();
@@ -95,7 +95,7 @@ public class PokerHandTest {
 	}
 	
 	@Test
-	public void test_isNotStraight() {
+	public void testIsNotStraight() {
 		CardFactory cfactory = new CardFactory();
 		
 		ArrayList<Card> straight = new ArrayList<Card>();
@@ -112,8 +112,8 @@ public class PokerHandTest {
         assertFalse(hand.isStraight());
 	}
 	
-	
-	public void test_isFlush() {
+	@Test
+	public void testIsFlush() {
 		CardFactory cfactory = new CardFactory();
         
         ArrayList<Card> flush = new ArrayList<Card>();
@@ -132,7 +132,7 @@ public class PokerHandTest {
 	}
 	
 	@Test
-	public void test_isNotFlush() {
+	public void testIsNotFlush() {
 		CardFactory cfactory = new CardFactory();
         
         ArrayList<Card> flush = new ArrayList<Card>();
