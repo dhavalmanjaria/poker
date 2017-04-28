@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 
 /**
  * 
@@ -39,51 +40,67 @@ public class PokerHand  {
 		this.cards = hand;
 	}
 	
-	// 
+	// The TwoPair described is actually a One Pair
 	public boolean isOnePair() {
-		ArrayList<Integer> twoPairList = new ArrayList<Integer>();
-		for(Card c: cards) {
-			if (twoPairList.contains(c.getNumber()))
-				return true;
-			else
-				twoPairList.add(c.getNumber());
-		}
-		return false;
-	}
-	
-	public boolean isThreeOfAKind() {
-        ArrayList<Integer> threeKindList = new ArrayList<Integer>();
-        
-        int cardNumberCount = 1;
-        
-        for(Card c: cards) {
-            if(threeKindList.contains(c.getNumber())) {
-                cardNumberCount++;
-                if (cardNumberCount > 2) {
-                    return true;
-                }
-            }
-
-            threeKindList.add(c.getNumber());
-        }
-        return false;
+		HashMap<Integer, Integer> numberCount = new HashMap<Integer, Integer>();
+    	
+    	for(Card c: cards) {
+    		if (numberCount.containsKey(c.getNumber())) {
+    			int count = numberCount.get(c.getNumber());
+    			numberCount.put(c.getNumber(), count + 1);
+    		}
+    		else
+    			numberCount.put(c.getNumber(), 1);
+    	}
+    	
+    	for(Integer i: numberCount.keySet()) {
+    		if (numberCount.get(i) >= 2) {
+    			return true;
+    		}
+    	}
+    	return false;
     }
     
+	public boolean isThreeOfAKind() {
+    	HashMap<Integer, Integer> numberCount = new HashMap<Integer, Integer>();
+    	
+    	for(Card c: cards) {
+    		if (numberCount.containsKey(c.getNumber())) {
+    			int count = numberCount.get(c.getNumber());
+    			numberCount.put(c.getNumber(), count + 1);
+    		}
+    		else
+    			numberCount.put(c.getNumber(), 1);
+    	}
+    	
+
+    	for(Integer i: numberCount.keySet()) {
+    		if (numberCount.get(i) >= 3) {
+    			return true;
+    		}
+    	}
+    	return false;
+ 
+    }
+	
     public boolean isFourOfAKind() {
-        ArrayList<Integer> fourKindList = new ArrayList<Integer>();
-        
-        int cardNumberCount = 1;
-        
-        for(Card c: cards) {
-            if(fourKindList.contains(c.getNumber())) {
-                cardNumberCount++;
-                if (cardNumberCount > 3) {
-                    return true;
-                }
-            }
-            fourKindList.add(c.getNumber());
-        }
-        return false;
+    	HashMap<Integer, Integer> numberCount = new HashMap<Integer, Integer>();
+    	
+    	for(Card c: cards) {
+    		if (numberCount.containsKey(c.getNumber())) {
+    			int count = numberCount.get(c.getNumber());
+    			numberCount.put(c.getNumber(), count + 1);
+    		}
+    		else
+    			numberCount.put(c.getNumber(), 1);
+    	}
+    	
+    	for(Integer i: numberCount.keySet()) {
+    		if (numberCount.get(i) >= 4) {
+    			return true;
+    		}
+    	}
+    	return false;
     }
     
     public boolean isStraight() {
@@ -98,36 +115,47 @@ public class PokerHand  {
        
        boolean retval = false;
 
-       int seq_count = 1;
+       int seq_count = 0;
        for(int i = 0; i < straightList.size(); i++) {
     	  // System.out.println((straightList.get(i) - straightList.get(i - )) == 1);
     	   if (i > 0) {
-    		   if ((straightList.get(i) - straightList.get(i - 1)) == 1) {
+    		   
+    		   if ((straightList.get(i) - straightList.get(i - 1)) <= 1) {
     			   seq_count++;
-    			   if(seq_count > 4) {
+				   if(seq_count > 4) {
     				   retval = true;
     			   }
     		   } 
     		   else {
-    			   seq_count = 1;
+    			   seq_count = 0;
+    			   retval = false;
     		   }
-    			   
+
     	   }
        }
        return retval;
     }
     
     public boolean isFlush() {
-    	ArrayList<Character> flushList = new ArrayList<Character>();
+    	HashMap<Character, Integer> charCount = new HashMap<Character, Integer>();
     	
     	for(Card c: cards) {
-    		flushList.add(c.getSuite());
-    		if(!flushList.contains(c.getSuite())) {
-    			System.out.println(c.getSuite());
-    			
+    		if (charCount.containsKey(c.getSuite())) {
+    			int count = charCount.get(c.getSuite());
+    			charCount.put(c.getSuite(), count + 1);
     		}
-    			
+    		else
+    			charCount.put(c.getSuite(), 0);
     	}
-    	return true;
+    	
+    	for(Character ch: charCount.keySet()) {
+    		if (charCount.get(ch) >= 5) {
+    			return true;
+    		}
+    		else {
+    			return false;
+    		}
+    	}
+    	return false;
     }
 }

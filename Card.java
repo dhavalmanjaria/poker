@@ -1,5 +1,10 @@
 
 public class Card {
+
+	protected Card() {
+		
+	}
+	
 	public int getNumber() {
 		return number;
 	}

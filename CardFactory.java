@@ -1,5 +1,10 @@
 
-public class CardFactory {
+/**
+ * 
+ * @author dhaval
+ * Use this method to create a card by giving it a string that represents a card.
+ */
+public class CardFactory extends Card {
 	
 	public Card createCard(String cardName) throws IllegalArgumentException {
 		if (cardName.length() > 3) { // three for no. 10 cards
@@ -16,6 +21,10 @@ public class CardFactory {
 		}
 		else
 			suite = cardName.charAt(1);
+		
+		if ("sdhc".indexOf(suite) < 0) {
+			throw new IllegalArgumentException("Invalid value for suite. Must be s for spades, eg: 7s, qh");
+		}
 		
 		// If the val is not an integer, then the setNumber(char) method is called
 		// otherwise the setNumber(int) method is called.

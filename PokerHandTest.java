@@ -83,6 +83,8 @@ public class PokerHandTest {
 		ArrayList<Card> straight = new ArrayList<Card>();
         straight.add(cfactory.createCard("2h"));
         straight.add(cfactory.createCard("3c"));
+        straight.add(cfactory.createCard("3d"));
+        straight.add(cfactory.createCard("4d"));
         straight.add(cfactory.createCard("4s"));
         straight.add(cfactory.createCard("5s"));
         straight.add(cfactory.createCard("6h"));
@@ -93,18 +95,58 @@ public class PokerHandTest {
 	}
 	
 	@Test
+	public void test_isNotStraight() {
+		CardFactory cfactory = new CardFactory();
+		
+		ArrayList<Card> straight = new ArrayList<Card>();
+        straight.add(cfactory.createCard("2h"));
+        straight.add(cfactory.createCard("3c"));
+        straight.add(cfactory.createCard("3d"));
+        straight.add(cfactory.createCard("4d"));
+        straight.add(cfactory.createCard("4s"));
+        straight.add(cfactory.createCard("5s"));
+        straight.add(cfactory.createCard("7h"));
+        
+        PokerHand hand = new PokerHand(straight);
+        
+        assertFalse(hand.isStraight());
+	}
+	
+	
 	public void test_isFlush() {
 		CardFactory cfactory = new CardFactory();
         
         ArrayList<Card> flush = new ArrayList<Card>();
         flush.add(cfactory.createCard("2h"));
         flush.add(cfactory.createCard("3h"));
+
         flush.add(cfactory.createCard("4h"));
         flush.add(cfactory.createCard("5h"));
-        flush.add(cfactory.createCard("6d"));
+        flush.add(cfactory.createCard("6h"));
+        flush.add(cfactory.createCard("2d"));
+        flush.add(cfactory.createCard("3d"));
         
         PokerHand hand = new PokerHand(flush);
         
         assertTrue(hand.isFlush());
+	}
+	
+	@Test
+	public void test_isNotFlush() {
+		CardFactory cfactory = new CardFactory();
+        
+        ArrayList<Card> flush = new ArrayList<Card>();
+        flush.add(cfactory.createCard("2h"));
+        flush.add(cfactory.createCard("3h"));
+
+        flush.add(cfactory.createCard("4h"));
+        flush.add(cfactory.createCard("5h"));
+        flush.add(cfactory.createCard("6d"));
+        flush.add(cfactory.createCard("6d"));
+        flush.add(cfactory.createCard("3d"));
+        
+        PokerHand hand = new PokerHand(flush);
+        
+        assertFalse(hand.isFlush());
 	}
 }
